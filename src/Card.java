@@ -47,4 +47,80 @@ public class Card {
         } else
             return "cardError-1";
     }
+
+    public double getCardCategory(String currentCardCategory) {
+        if (currentCardCategory.equals("Hardness")) {
+            return this.hardness;
+        }
+        if (currentCardCategory.equals("Specific Gravity")) {
+            return this.specificGravity;
+        }
+        if (currentCardCategory.equals("Cleavage")) {
+            switch (this.cleavage) {
+                case "none":
+                    return 0;
+                case "poor/none":
+                    return 1;
+                case "1 poor":
+                    return 2;
+                case "2 poor":
+                    return 3;
+                case "1 good":
+                    return 4;
+                case "1 good, 1 poor":
+                    return 5;
+                case "2 good":
+                    return 6;
+                case "3 good":
+                    return 7;
+                case "1 perfect":
+                    return 8;
+                case "1 perfect, 1 good":
+                    return 9;
+                case "1 perfect, 2 good":
+                    return 10;
+                case "2 perfect, 1 good":
+                    return 11;
+                case "3 perfect":
+                    return 12;
+                case "4 perfect":
+                    return 13;
+                case "6 perfect":
+                    return 14;
+            }
+        }
+        if (currentCardCategory.equals("Crustal Abundance")) {
+            switch (this.crustalAbundance) {
+                case "ultratrace":
+                    return 0;
+                case "trace":
+                    return 1;
+                case "low":
+                    return 2;
+                case "moderate":
+                    return 3;
+                case "high":
+                    return 4;
+                case "very high":
+                    return 5;
+            }
+        }
+        if (currentCardCategory.equals("Economic Value")) {
+            switch (this.economicValue) {
+                case "trivial":
+                    return 0;
+                case "low":
+                    return 1;
+                case "moderate":
+                    return 2;
+                case "high":
+                    return 3;
+                case "very high":
+                    return 4;
+                case "I'm rich":
+                    return 5;
+            }
+        }
+        return -1;
+    }
 }

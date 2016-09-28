@@ -2,8 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Deck {
-    private static final int NUM_CARDS_INIT = 60;
-    private ArrayList<Card> cards;
+        private ArrayList<Card> cards;
 
     public Deck() {
         cards = new ArrayList<Card>();
@@ -298,7 +297,6 @@ public class Deck {
             int idx = new Random().nextInt(cards.size());
             Card card = cards.remove(idx);
             ret.add(card);
-//            System.out.println("card = " + card); //Debug Testing
         }
         return ret;
     }

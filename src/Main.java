@@ -1,27 +1,29 @@
 import java.util.Scanner;
 
 public class Main {
-//    private static final Object NEW_GAME = 1;
 
     private static Game game = new Game();
 
     public static void main(String[] args) {
         showWelcome();
         showMenu();
+        int option;
+        do {
+            option = getUserMenuChoice();
 
-        int option = getUserMenuChoice();
+            switch (option) {
 
-        switch (option) {
-
-            case 1:
-                startNewGame();
-                playTheGame();
-                break;
-            case 2:
-                instructions();
-                //call main again
-                break;
+                case 1:
+                    startNewGame();
+                    playTheGame();
+                    break;
+                case 2:
+                    instructions();
+                    showMenu();
+                    break;
+            }
         }
+        while (option != 1);
     }
 
     public static void playTheGame() {
@@ -35,9 +37,9 @@ public class Main {
 
             if (currentPlayer == 0) {
                 System.out.println(game.players[0]);
-                game.printCards(game.players[0]);
+                showPlayerCards(game.players[0]);
                 //humanPlayer takes turn
-                game.humanPlayerTakeTurn();
+                game.playerTakeTurn();
 
             } else {
                 System.out.println(game.aiTakeTurn());
@@ -55,14 +57,19 @@ public class Main {
         game.dealRandomCards();
         game.setHumanPlayer();
         Player humanPlayer = game.getHumanPlayer();
-        showPlayer(humanPlayer);
+        showPlayerCards(humanPlayer);
         return game;
     }
 
-    private static void showPlayer(Player humanplayer) {
-        System.out.println("Human Player=" + humanplayer);
-    }
+    private static void showPlayerCards(Player humanPlayer) {
 
+        int cardNumber = 1;
+        for (Card card : humanPlayer.cards) {
+            System.out.println("\nCard: " + cardNumber);// giving the dealt cards a number so I can remove them and use them more easily
+            System.out.println(card);
+            cardNumber += 1;
+        }
+    }
 
     public static int getNumPlayers() {
         System.out.println("Please choose 2, 3 or 4 AI's");
@@ -93,7 +100,7 @@ public class Main {
     }
 
     private static void showWelcome() {
-        System.out.println("Hello user, and welcome to Super Trumps Card Game!");
+        System.out.println("Hello, and welcome to Super Trumps Card Game!");
     }
 
 
@@ -126,7 +133,6 @@ public class Main {
                 "6. The game continues with players taking turns to play cards until all but one player has passed." + '\n' +
                 "The last player then gets to lead out the next round and chooses the trump category to be played." + '\n' + '\n' +
                 "7. The winner of the game is the first player to lose all of their cards. The game continues until" + '\n' +
-                "all but one player (i.e., the loser) has lost their cards.");
-
+                "all but one player (i.e., the loser) has lost their cards.\n");
     }
 }
