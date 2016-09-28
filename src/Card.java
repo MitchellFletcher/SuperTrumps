@@ -8,10 +8,9 @@ public class Card {
     private double hardness, specificGravity;
 
     public Card(String fileName, String cardType, String title,
-                  String chemistry, String classification, String crystalSystem,
-                  ArrayList<String> occurrence, double hardness, double specificGravity,
-                  String cleavage, String crustalAbundance, String economicValue)
-    {
+                String chemistry, String classification, String crystalSystem,
+                ArrayList<String> occurrence, double hardness, double specificGravity,
+                String cleavage, String crustalAbundance, String economicValue) {
         this.fileName = fileName;
         this.cardType = cardType;
         this.title = title;
@@ -25,7 +24,7 @@ public class Card {
         this.hardness = hardness;
         this.specificGravity = specificGravity;
         occurString = "";
-        for(int i = 0 ; i < occurrence.size(); i++) {
+        for (int i = 0; i < occurrence.size(); i++) {
             occurString = occurString + " " + occurrence.get(i);
 //            System.out.println(occurrence.get(i)); //Debug
 //            System.out.println(occurString); //Debug
@@ -33,7 +32,7 @@ public class Card {
 //        System.out.println(this.occurrence); //Debug to check occurrence passed correctly
     }
 
-    public String toString(){
+    public String toString() {
         String ret;
         if (cardType.equals("play")) {
             ret = "\n" + title + "\n Chemistry: " + chemistry + "\n Classification: " + classification +
@@ -42,13 +41,10 @@ public class Card {
                     "\n Cleavage: " + cleavage + "\n Crustal Abundance: " + crustalAbundance +
                     "\n Economic Value: " + economicValue;
             return ret;
-        }
-        else
-        if (cardType.equals("trump")){
+        } else if (cardType.equals("trump")) {
             ret = "\n" + title + "\n Change trump category to: " + chemistry;
             return ret;
-        }
-        else
+        } else
             return "cardError-1";
     }
 }

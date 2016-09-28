@@ -5,7 +5,7 @@ public class Deck {
     private static final int NUM_CARDS_INIT = 60;
     private ArrayList<Card> cards;
 
-    public Deck(){
+    public Deck() {
         cards = new ArrayList<Card>();
         ArrayList<String> cardOccurrence = new ArrayList<String>();
 
@@ -294,7 +294,7 @@ public class Deck {
 
     public ArrayList<Card> dealCards(int numCardsDealt) {
         ArrayList<Card> ret = new ArrayList<Card>();
-        for(int i = 0; i < numCardsDealt; i++){
+        for (int i = 0; i < numCardsDealt; i++) {
             int idx = new Random().nextInt(cards.size());
             Card card = cards.remove(idx);
             ret.add(card);
