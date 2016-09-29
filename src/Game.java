@@ -12,6 +12,7 @@ public class Game {
     public Player[] players;
     private int humanPlayerID;
     private static Card currentCard;
+    public String chosenCategory;
 
     Deck deck = new Deck();
 
@@ -51,11 +52,30 @@ public class Game {
     public int playerTakeTurn() {
 
         int choice;
+
+        if (currentCardCategory == null) {
+            Scanner getCategory = new Scanner(System.in);
+            System.out.println("Enter desired category");
+
+            chosenCategory = getCategory.nextLine();
+            boolean choiceError = true;
+            while (choiceError) {
+
+                choiceError = checkInputCategory(chosenCategory);
+                if (choiceError) {
+                    System.out.println("Enter card category 2");
+                    chosenCategory = getCategory.nextLine();
+                }
+
+            }
+            currentCardCategory = chosenCategory;
+        }
+
         Scanner userInput = new Scanner(System.in);
-        System.out.println("Human select a Card to play");
+        System.out.println("Select a card to play");
         if (currentCard != null) {
             System.out.println(currentCard);
-            System.out.println("Human Select a card to play");
+            System.out.println("Select a card to play");
         }
         choice = userInput.nextInt() - 1;
         boolean cardHasError = true;
@@ -63,7 +83,7 @@ public class Game {
             cardHasError = checkCardError(choice);
             if (cardHasError) {
                 System.out.println("Out of range");
-                System.out.println("Human select a Card to play");
+                System.out.println("Select a card to play");
                 choice = userInput.nextInt() - 1;
             }
         }
@@ -78,8 +98,18 @@ public class Game {
         return choice;
     }
 
+    public boolean checkInputCategory(String inputCategory) {
+        if (inputCategory.equals("Hardness") || (inputCategory.equals("Specific Gravity") ||
+                (inputCategory.equals("Cleavage") || (inputCategory.equals("Crustal abundance") || (inputCategory.equals("Economic value")))))) {
+            return false;
+        }
+        System.out.println("Please select a valid category");
+        return true;
+    }
+
     public boolean checkCardError(int choice) {
-        if (players[0].cards.size() < choice || choice < 0) {
+        currentCard = playedCard;
+        if (players[0].cards.size() <= choice || choice < 0) {
             return true;
         }
         if (currentCard.getCardCategory(currentCardCategory) < playedCard.getCardCategory(currentCardCategory)) {

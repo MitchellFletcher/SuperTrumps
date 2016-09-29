@@ -30,6 +30,7 @@ public class Main {
         //game logic
         boolean gameIsOn = true;
         int currentPlayer = game.dealerId + 1;
+        System.out.println(game.playedCard = game.players[0].cards.get(0));
         while (gameIsOn) {
             if (currentPlayer > game.players.length) {
                 currentPlayer = 0;
