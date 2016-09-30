@@ -5,16 +5,16 @@ import java.util.Scanner;
 public class Game {
 
     private static final int NUM_CARDS_TO_DEAL = 8;
-    public String currentCardCategory;
-    public Card playedCard;
+    public Player[] players;
+    private static Card chosenCard;
+    public Card currentCard;
     public int numPlayers;
     public int dealerId;
-    public Player[] players;
-    private int humanPlayerID;
-    private static Card currentCard;
+    public String currentCardCategory;
     public String chosenCategory;
 
     Deck deck = new Deck();
+    private int humanPlayerID;
 
     public int selectDealer() {
         Random rand = new Random();
@@ -73,8 +73,8 @@ public class Game {
 
         Scanner userInput = new Scanner(System.in);
         System.out.println("Select a card to play");
-        if (currentCard != null) {
-            System.out.println(currentCard);
+        if (chosenCard != null) {
+            System.out.println(chosenCard);
             System.out.println("Select a card to play");
         }
         choice = userInput.nextInt() - 1;
@@ -87,7 +87,7 @@ public class Game {
                 choice = userInput.nextInt() - 1;
             }
         }
-        currentCard = players[0].cards.remove(choice);//removes users card they just played
+        chosenCard = players[0].cards.remove(choice);//removes users card they just played
 
         if (players[0].cards.size() == 0) {// if player has 0 cards, the game is finished and the player wins
             finishGame();
@@ -108,11 +108,11 @@ public class Game {
     }
 
     public boolean checkCardError(int choice) {
-        currentCard = playedCard;
+        chosenCard = currentCard;
         if (players[0].cards.size() <= choice || choice < 0) {
             return true;
         }
-        if (currentCard.getCardCategory(currentCardCategory) < playedCard.getCardCategory(currentCardCategory)) {
+        if (chosenCard.getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
             return true;
         }
         return false;
@@ -124,8 +124,14 @@ public class Game {
     }
 
     public void finishGame() {
-        System.out.println("You Won!");
-        System.exit(1);
+
+        if (players[humanPlayerID].cards.size() == 0){
+            System.out.println("You won!");
+        }
+        else {
+            System.out.println("YOU LOST SCRUB!");
+        }
+        Main.gameIsOn = false;
     }
 }
 

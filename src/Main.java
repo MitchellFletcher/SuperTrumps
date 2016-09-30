@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static boolean gameIsOn = true;
+
     private static Game game = new Game();
 
     public static void main(String[] args) {
@@ -28,9 +30,8 @@ public class Main {
 
     public static void playTheGame() {
         //game logic
-        boolean gameIsOn = true;
         int currentPlayer = game.dealerId + 1;
-        System.out.println(game.playedCard = game.players[0].cards.get(0));
+        System.out.println(game.currentCard = game.players[0].cards.get(0));
         while (gameIsOn) {
             if (currentPlayer > game.players.length) {
                 currentPlayer = 0;
@@ -43,7 +44,7 @@ public class Main {
                 game.playerTakeTurn();
 
             } else {
-                System.out.println(game.aiTakeTurn());
+                game.aiTakeTurn();
             }
             currentPlayer += 1;
 

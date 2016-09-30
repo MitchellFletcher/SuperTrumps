@@ -26,10 +26,9 @@ public class Card {
         occurString = "";
         for (int i = 0; i < occurrence.size(); i++) {
             occurString = occurString + " " + occurrence.get(i);
-//            System.out.println(occurrence.get(i)); //Debug
-//            System.out.println(occurString); //Debug
+
         }
-//        System.out.println(this.occurrence); //Debug to check occurrence passed correctly
+
     }
 
     public String toString() {
