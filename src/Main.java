@@ -5,6 +5,7 @@ public class Main {
     public static boolean gameIsOn = true;
 
     private static Game game = new Game();
+    public static int currentPlayer = game.dealerId + 1;
 
     public static void main(String[] args) {
         showWelcome();
@@ -31,14 +32,14 @@ public class Main {
     public static void playTheGame() {
         //game logic
         int currentPlayer = game.dealerId + 1;
-        System.out.println(game.currentCard = game.players[0].cards.get(0));
+//        System.out.println(game.currentCard = game.players[0].cards.get(0));
         while (gameIsOn) {
-            if (currentPlayer > game.players.length) {
+            if (currentPlayer > game.players.length - 1) {
                 currentPlayer = 0;
             }
 
             if (currentPlayer == 0) {
-                System.out.println(game.players[0]);
+                System.out.println(game.getHumanPlayer());
                 showPlayerCards(game.players[0]);
                 //humanPlayer takes turn
                 game.playerTakeTurn();
@@ -58,8 +59,6 @@ public class Main {
         game.selectDealer();
         game.dealRandomCards();
         game.setHumanPlayer();
-        Player humanPlayer = game.getHumanPlayer();
-        showPlayerCards(humanPlayer);
         return game;
     }
 

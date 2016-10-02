@@ -122,4 +122,11 @@ public class Card {
         }
         return -1;
     }
+
+    public String getCardType() {
+        return cardType;
+    }
+    public String getCardTitle() {
+        return title;
+    }
 }

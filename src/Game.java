@@ -6,7 +6,6 @@ public class Game {
 
     private static final int NUM_CARDS_TO_DEAL = 8;
     public Player[] players;
-    private static Card chosenCard;
     public Card currentCard;
     public int numPlayers;
     public int dealerId;
@@ -44,14 +43,64 @@ public class Game {
         return players[humanPlayerID];
     }
 
-    public String aiTakeTurn() {
-        String playTurn = "AI taking turn";
-        return playTurn;
+    public void aiTakeTurn() {
+        Player aiPlayer = players[Main.currentPlayer];
+        int aiChoice;
+        int counter = aiPlayer.cards.size();
+        if (currentCardCategory == null) {
+            currentCardCategory = comPickCategory();
+        }
+        if (currentCard == null) {
+            Random rand = new Random();
+            currentCard = aiPlayer.cards.remove(rand.nextInt(aiPlayer.cards.size()));
+        }
+        if (aiPlayer.cards.size() == 0) {
+            System.out.println("Computer Wins");
+            finishGame();
+        } else {
+            for (int i = 0; i < aiPlayer.cards.size(); i++) {
+                aiChoice = i;
+
+                if (aiPlayer.cards.get(aiChoice).getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
+                    System.out.println("Com selecting card");
+                    counter--;
+                    if(counter == 0){
+                        System.out.println("Com unable to play card");
+                        skipTurn();
+                    }
+                } else {
+                    currentCard = aiPlayer.cards.remove(aiChoice);
+                    System.out.println("Com selecting card\n");
+                    System.out.println("Com picked: " + currentCard);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void skipTurn() {
+        if ()
+    }
+
+    public boolean isTrumpCard(int choice){
+        Card card = players[0].cards.get(choice);
+        return card.getCardType().equals("trump");
+    }
+
+    private String comPickCategory() {
+        String[] aiCategoryChoice = {"Hardness", "Cleavage", "Specific Gravity", "Crustal Abundance", "Economic Value"};
+        String aiChoiceCat;
+        System.out.println("Com selecting category");
+        aiChoiceCat = (aiCategoryChoice[new Random().nextInt(aiCategoryChoice.length)]);
+        System.out.println(aiChoiceCat);
+
+        return aiChoiceCat;
     }
 
     public int playerTakeTurn() {
 
-        int choice;
+        int choice = 0;
+        System.out.println("Current Category: " + currentCardCategory);
 
         if (currentCardCategory == null) {
             Scanner getCategory = new Scanner(System.in);
@@ -63,7 +112,7 @@ public class Game {
 
                 choiceError = checkInputCategory(chosenCategory);
                 if (choiceError) {
-                    System.out.println("Enter card category 2");
+                    System.out.println("Enter card category");
                     chosenCategory = getCategory.nextLine();
                 }
 
@@ -73,34 +122,39 @@ public class Game {
 
         Scanner userInput = new Scanner(System.in);
         System.out.println("Select a card to play");
-        if (chosenCard != null) {
-            System.out.println(chosenCard);
-            System.out.println("Select a card to play");
+
+        if (currentCard == null) {
+            System.out.println("Pick a card");
+            choice = userInput.nextInt() - 1;
         }
-        choice = userInput.nextInt() - 1;
-        boolean cardHasError = true;
-        while (cardHasError) {
-            cardHasError = checkCardError(choice);
-            if (cardHasError) {
-                System.out.println("Out of range");
-                System.out.println("Select a card to play");
-                choice = userInput.nextInt() - 1;
+        if (currentCard != null) {
+            System.out.println("\nCurrent card: ");
+            System.out.println(currentCard);
+            System.out.println("Select a card to play");
+            choice = userInput.nextInt() - 1;
+
+
+            boolean cardHasError = true;
+            while (cardHasError) {
+                cardHasError = checkCardError(choice);
+                if (cardHasError) {
+                    System.out.println("Select a card to play");
+                    choice = userInput.nextInt() - 1;
+                }
             }
         }
-        chosenCard = players[0].cards.remove(choice);//removes users card they just played
+        currentCard = players[0].cards.remove(choice);//removes users card they just played
 
         if (players[0].cards.size() == 0) {// if player has 0 cards, the game is finished and the player wins
             finishGame();
         }
-
-        // TODO: 26/09/2016 Make method to error check input range and if the card selected can be played
 
         return choice;
     }
 
     public boolean checkInputCategory(String inputCategory) {
         if (inputCategory.equals("Hardness") || (inputCategory.equals("Specific Gravity") ||
-                (inputCategory.equals("Cleavage") || (inputCategory.equals("Crustal abundance") || (inputCategory.equals("Economic value")))))) {
+                (inputCategory.equals("Cleavage") || (inputCategory.equals("Crustal Abundance") || (inputCategory.equals("Economic Value")))))) {
             return false;
         }
         System.out.println("Please select a valid category");
@@ -108,11 +162,13 @@ public class Game {
     }
 
     public boolean checkCardError(int choice) {
-        chosenCard = currentCard;
+
         if (players[0].cards.size() <= choice || choice < 0) {
+            System.out.println("Card out of range");
             return true;
         }
-        if (chosenCard.getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
+        if (players[0].cards.get(choice).getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
+            System.out.println("Value too low!");
             return true;
         }
         return false;
@@ -125,10 +181,9 @@ public class Game {
 
     public void finishGame() {
 
-        if (players[humanPlayerID].cards.size() == 0){
+        if (players[humanPlayerID].cards.size() == 0) {
             System.out.println("You won!");
-        }
-        else {
+        } else {
             System.out.println("YOU LOST SCRUB!");
         }
         Main.gameIsOn = false;

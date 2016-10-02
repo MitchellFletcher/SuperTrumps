@@ -5,8 +5,8 @@ public class Deck {
         private ArrayList<Card> cards;
 
     public Deck() {
-        cards = new ArrayList<Card>();
-        ArrayList<String> cardOccurrence = new ArrayList<String>();
+        cards = new ArrayList<>();
+        ArrayList<String> cardOccurrence = new ArrayList<>();
 
         //Play card creation
         cardOccurrence.add("igneous");
@@ -280,13 +280,13 @@ public class Deck {
         cardOccurrence.clear();
 
         //Trump card creation
-        cards.add(new Card("Slide55.jpg", "trump", "The Miner", "Economic value", "", "", cardOccurrence, 0, 0, "", "", ""));
+        cards.add(new Card("Slide55.jpg", "trump", "The Miner", "Economic Value", "", "", cardOccurrence, 0, 0, "", "", ""));
 
-        cards.add(new Card("Slide56.jpg", "trump", "The Petrologist", "Crustal abundance", "", "", cardOccurrence, 0, 0, "", "", ""));
+        cards.add(new Card("Slide56.jpg", "trump", "The Petrologist", "Crustal Abundance", "", "", cardOccurrence, 0, 0, "", "", ""));
 
         cards.add(new Card("Slide58.jpg", "trump", "The Mineralogist", "Cleavage", "", "", cardOccurrence, 0, 0, "", "", ""));
 
-        cards.add(new Card("Slide59.jpg", "trump", "The Geophysicist", "Specific gravity", "", "", cardOccurrence, 0, 0, "", "", ""));
+        cards.add(new Card("Slide59.jpg", "trump", "The Geophysicist", "Specific Gravity", "", "", cardOccurrence, 0, 0, "", "", ""));
 
         cards.add(new Card("Slide60.jpg", "trump", "The Geologist", "your choice", "", "", cardOccurrence, 0, 0, "", "", ""));
     }
