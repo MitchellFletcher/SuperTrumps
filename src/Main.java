@@ -30,57 +30,53 @@ public class Main {
     }
 
     public static void playTheGame() {
-        //game logic
         int currentPlayer = game.dealerId + 1;
-//        System.out.println(game.currentCard = game.players[0].cards.get(0));
+
         while (gameIsOn) {
             if (currentPlayer > game.players.length - 1) {
                 currentPlayer = 0;
             }
 
             if (currentPlayer == 0) {
-                System.out.println(game.getHumanPlayer());
+                System.out.println(game.getUser());
                 showPlayerCards(game.players[0]);
-                //humanPlayer takes turn
                 game.playerTakeTurn();
 
             } else {
-                game.aiTakeTurn();
+                game.comTakeTurn();
             }
             currentPlayer += 1;
-
         }
     }
-    //todo: setup players in correct order
 
     private static Game startNewGame() {
-        int numPlayers = getNumPlayers();
+        int numPlayers = getNumOpponents();
         game.setNumPlayers(numPlayers);
         game.selectDealer();
         game.dealRandomCards();
-        game.setHumanPlayer();
+        game.setUser();
         return game;
     }
 
-    private static void showPlayerCards(Player humanPlayer) {
+    private static void showPlayerCards(Player user) {
 
         int cardNumber = 1;
-        for (Card card : humanPlayer.cards) {
-            System.out.println("\nCard: " + cardNumber);// giving the dealt cards a number so I can remove them and use them more easily
+        for (Card card : user.cards) {
+            System.out.println("\nCard: " + cardNumber);
             System.out.println(card);
             cardNumber += 1;
         }
     }
 
-    public static int getNumPlayers() {
-        System.out.println("Please choose 2, 3 or 4 AI's");
+    public static int getNumOpponents() {
+        System.out.println("Please choose desired number of opponents between 2 and 4");
         Scanner userInput = new Scanner(System.in);
         int choice = userInput.nextInt();
-        while (choice != 2 && choice != 3 && choice != 4) {
-            System.out.println("Please choose 2, 3 or 4 players");
+        while (choice < 2 || choice > 4) {
+            System.out.println("Please choose desired number of opponents between 2 and 4");
             choice = userInput.nextInt();
         }
-        return choice;
+        return choice + 1;
     }
 
     private static int getUserMenuChoice() {
@@ -90,7 +86,6 @@ public class Main {
         while (choice != 1 && choice != 2) {
             System.out.println("Please choose 1 or 2");
             choice = userInput.nextInt();
-
         }
         return choice;
     }
@@ -101,7 +96,7 @@ public class Main {
     }
 
     private static void showWelcome() {
-        System.out.println("Hello, and welcome to Super Trumps Card Game!");
+        System.out.println("Welcome to Mineral Super Trumps Card Game!");
     }
 
 
@@ -134,6 +129,7 @@ public class Main {
                 "6. The game continues with players taking turns to play cards until all but one player has passed." + '\n' +
                 "The last player then gets to lead out the next round and chooses the trump category to be played." + '\n' + '\n' +
                 "7. The winner of the game is the first player to lose all of their cards. The game continues until" + '\n' +
-                "all but one player (i.e., the loser) has lost their cards.\n");
+                "all but one player (i.e., the loser) has lost their cards." + '\n' +
+                "To skip your turn enter 99" + '\n');
     }
 }

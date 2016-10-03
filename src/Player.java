@@ -4,10 +4,10 @@ import java.util.ArrayList;
 public class Player {
 
     public ArrayList<Card> cards;
-    private String playerId;
+    public static String playerID;
 
-    public Player(String playerId) {
-        this.playerId = playerId;
+    public Player(String playerID) {
+        this.playerID = playerID;
     }
 
     public void setCards(ArrayList<Card> cards) {
@@ -17,7 +17,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player ID=" + playerId;
+        return "";
     }
-
 }

@@ -10,15 +10,22 @@ public class Game {
     public int numPlayers;
     public int dealerId;
     public String currentCardCategory;
-    public String chosenCategory;
+    public String chosenCardCategory;
 
     Deck deck = new Deck();
-    private int humanPlayerID;
+    private int userID;
+
+    public void setUser() {
+        userID = 0;
+    }
+
+    public Player getUser() {
+        return players[userID];
+    }
 
     public int selectDealer() {
         Random rand = new Random();
         dealerId = rand.nextInt((numPlayers - 1) + 1);
-        System.out.println("Dealer ID = " + dealerId);
         return dealerId;
 
     }
@@ -35,42 +42,38 @@ public class Game {
         }
     }
 
-    public void setHumanPlayer() {
-        humanPlayerID = 0;
-    }
 
-    public Player getHumanPlayer() {
-        return players[humanPlayerID];
-    }
-
-    public void aiTakeTurn() {
-        Player aiPlayer = players[Main.currentPlayer];
-        int aiChoice;
-        int counter = aiPlayer.cards.size();
+    public void comTakeTurn() {
+        Player comPlayer = players[Main.currentPlayer];
+        int comChoice;
+        int counter = comPlayer.cards.size();
         if (currentCardCategory == null) {
             currentCardCategory = comPickCategory();
         }
         if (currentCard == null) {
             Random rand = new Random();
-            currentCard = aiPlayer.cards.remove(rand.nextInt(aiPlayer.cards.size()));
+            currentCard = comPlayer.cards.remove(rand.nextInt(comPlayer.cards.size()));
         }
-        if (aiPlayer.cards.size() == 0) {
-            System.out.println("Computer Wins");
+        if (comPlayer.cards.size() == 0) {
+            System.out.println("Com" + Player.playerID + " Wins");
             finishGame();
         } else {
-            for (int i = 0; i < aiPlayer.cards.size(); i++) {
-                aiChoice = i;
+            for (int i = 0; i < comPlayer.cards.size(); i++) {
+                comChoice = i;
 
-                if (aiPlayer.cards.get(aiChoice).getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
-                    System.out.println("Com selecting card");
+                if (comPlayer.cards.get(comChoice).getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
+                    System.out.println("Com selecting card...");
                     counter--;
-                    if(counter == 0){
+                    if (counter == 0) {
                         System.out.println("Com unable to play card");
-                        skipTurn();
+                        Card pickedCard = deck.dealCards(1).remove(0);
+                        comPlayer.cards.add(pickedCard);
+                        System.out.println("Com drew a card");
+                        break;
                     }
                 } else {
-                    currentCard = aiPlayer.cards.remove(aiChoice);
-                    System.out.println("Com selecting card\n");
+                    currentCard = comPlayer.cards.remove(comChoice);
+
                     System.out.println("Com picked: " + currentCard);
                     break;
                 }
@@ -79,77 +82,107 @@ public class Game {
     }
 
     private void skipTurn() {
-        if ()
+        System.out.println("Skipping turn!");
+        drawCard();
     }
 
-    public boolean isTrumpCard(int choice){
-        Card card = players[0].cards.get(choice);
-        return card.getCardType().equals("trump");
+    private void drawCard() {
+        Card pickedCard = deck.dealCards(1).remove(0);
+        players[0].cards.add(pickedCard);
+    }
+
+    public boolean isTrumpCard(int choice) {
+        return currentCard.getCardType().equals("trump");
     }
 
     private String comPickCategory() {
-        String[] aiCategoryChoice = {"Hardness", "Cleavage", "Specific Gravity", "Crustal Abundance", "Economic Value"};
-        String aiChoiceCat;
+        String[] comCategoryChoice = {"Hardness", "Cleavage", "Specific Gravity", "Crustal Abundance", "Economic Value"};
+        String comChoiceCategory;
         System.out.println("Com selecting category");
-        aiChoiceCat = (aiCategoryChoice[new Random().nextInt(aiCategoryChoice.length)]);
-        System.out.println(aiChoiceCat);
+        comChoiceCategory = (comCategoryChoice[new Random().nextInt(comCategoryChoice.length)]);
+        System.out.println(comChoiceCategory);
 
-        return aiChoiceCat;
+        return comChoiceCategory;
     }
 
-    public int playerTakeTurn() {
+    public String getCategory() {
+        Scanner getCategory = new Scanner(System.in);
+        System.out.println("Enter desired category");
 
-        int choice = 0;
-        System.out.println("Current Category: " + currentCardCategory);
+        chosenCardCategory = getCategory.nextLine();
+        boolean choiceError = true;
+        while (choiceError) {
+
+            choiceError = checkInputCategory(chosenCardCategory);
+            if (choiceError) {
+                System.out.println("Enter desired category");
+                chosenCardCategory = getCategory.nextLine();
+            }
+        }
+        return chosenCardCategory;
+    }
+
+    public void playerTakeTurn() {
+        int choice;
 
         if (currentCardCategory == null) {
-            Scanner getCategory = new Scanner(System.in);
-            System.out.println("Enter desired category");
-
-            chosenCategory = getCategory.nextLine();
-            boolean choiceError = true;
-            while (choiceError) {
-
-                choiceError = checkInputCategory(chosenCategory);
-                if (choiceError) {
-                    System.out.println("Enter card category");
-                    chosenCategory = getCategory.nextLine();
-                }
-
-            }
-            currentCardCategory = chosenCategory;
+            currentCardCategory = getCategory();
         }
 
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("Select a card to play");
+        Scanner userCardInput = new Scanner(System.in);
+        System.out.println("\nCurrent card: " + currentCard);
+        System.out.println("Current Category: " + currentCardCategory);
+        System.out.println("\nSelect a card to play or type 99 to skip your turn");
+        choice = userCardInput.nextInt() - 1;
+
+        if (choice == 98) {
+            drawCard();
+            return;
+        }
+        boolean cardHasError = true;
+        while (cardHasError) {
+            cardHasError = checkCardError(choice);
+            if (cardHasError) {
+                System.out.println("Select a card to play or type 99 to skip your turn");
+                choice = userCardInput.nextInt() - 1;
+                if (choice == 98) {
+                    drawCard();
+                    return;
+                }
+            }
+        }
+
+
+        currentCard = players[0].cards.remove(choice);
 
         if (currentCard == null) {
             System.out.println("Pick a card");
-            choice = userInput.nextInt() - 1;
+            choice = userCardInput.nextInt() - 1;
         }
         if (currentCard != null) {
-            System.out.println("\nCurrent card: ");
-            System.out.println(currentCard);
-            System.out.println("Select a card to play");
-            choice = userInput.nextInt() - 1;
-
-
-            boolean cardHasError = true;
-            while (cardHasError) {
-                cardHasError = checkCardError(choice);
-                if (cardHasError) {
-                    System.out.println("Select a card to play");
-                    choice = userInput.nextInt() - 1;
+            if (isTrumpCard(choice)) {
+                System.out.println("Card is a Trump");
+                if (currentCard.getCardTitle().equals("The Miner")) {
+                    currentCardCategory = currentCard.getChemistry();
+                }
+                if (currentCard.getCardTitle().equals("The Petrologist")) {
+                    currentCardCategory = currentCard.getChemistry();
+                }
+                if (currentCard.getCardTitle().equals("The Mineralogist")) {
+                    currentCardCategory = currentCard.getChemistry();
+                }
+                if (currentCard.getCardTitle().equals("The Geophysicist")) {
+                    currentCardCategory = currentCard.getChemistry();
+                }
+                if (currentCard.getCardTitle().equals("The Geologist")) {
+                    currentCardCategory = getCategory();
                 }
             }
-        }
-        currentCard = players[0].cards.remove(choice);//removes users card they just played
 
-        if (players[0].cards.size() == 0) {// if player has 0 cards, the game is finished and the player wins
-            finishGame();
+            if (players[0].cards.size() == 0) {
+                finishGame();
+            }
         }
-
-        return choice;
     }
 
     public boolean checkInputCategory(String inputCategory) {
@@ -162,14 +195,18 @@ public class Game {
     }
 
     public boolean checkCardError(int choice) {
-
-        if (players[0].cards.size() <= choice || choice < 0) {
+        if (choice == 98) {
+            skipTurn();
+        } else if (players[0].cards.size() <= choice || choice < 0) {
             System.out.println("Card out of range");
             return true;
-        }
-        if (players[0].cards.get(choice).getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
-            System.out.println("Value too low!");
-            return true;
+        } else if (players[userID].cards.get(choice).getCardType().equals("trump")) {
+            return false;
+        } else if (currentCard != null) {
+            if (players[0].cards.get(choice).getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
+                System.out.println("Category value too low!");
+                return true;
+            }
         }
         return false;
     }
@@ -181,13 +218,11 @@ public class Game {
 
     public void finishGame() {
 
-        if (players[humanPlayerID].cards.size() == 0) {
-            System.out.println("You won!");
+        if (players[userID].cards.size() == 0) {
+            System.out.println("YOU WON!");
         } else {
-            System.out.println("YOU LOST SCRUB!");
+            System.out.println("YOU LOST!");
         }
         Main.gameIsOn = false;
     }
 }
-
-

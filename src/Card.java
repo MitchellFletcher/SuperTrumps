@@ -26,9 +26,7 @@ public class Card {
         occurString = "";
         for (int i = 0; i < occurrence.size(); i++) {
             occurString = occurString + " " + occurrence.get(i);
-
         }
-
     }
 
     public String toString() {
@@ -126,7 +124,12 @@ public class Card {
     public String getCardType() {
         return cardType;
     }
+
     public String getCardTitle() {
         return title;
+    }
+
+    public String getChemistry() {
+        return chemistry;
     }
 }

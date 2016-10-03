@@ -2,13 +2,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Deck {
-        private ArrayList<Card> cards;
+    private ArrayList<Card> cards;
 
     public Deck() {
         cards = new ArrayList<>();
         ArrayList<String> cardOccurrence = new ArrayList<>();
 
-        //Play card creation
         cardOccurrence.add("igneous");
         cardOccurrence.add("metamorphic");
         cardOccurrence.add("sedimentary");
@@ -292,12 +291,12 @@ public class Deck {
     }
 
     public ArrayList<Card> dealCards(int numCardsDealt) {
-        ArrayList<Card> ret = new ArrayList<Card>();
+        ArrayList<Card> cardArrayList = new ArrayList<Card>();
         for (int i = 0; i < numCardsDealt; i++) {
             int idx = new Random().nextInt(cards.size());
             Card card = cards.remove(idx);
-            ret.add(card);
+            cardArrayList.add(card);
         }
-        return ret;
+        return cardArrayList;
     }
 }
