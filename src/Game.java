@@ -7,7 +7,7 @@ public class Game {
     private static final int NUM_CARDS_TO_DEAL = 8;
     public Player[] players;
     public Card currentCard;
-    public int numPlayers;
+    public static int numPlayers;
     public int dealerId;
     public String currentCardCategory;
     public String chosenCardCategory;
@@ -212,8 +212,7 @@ public class Game {
     }
 
 
-    public void setNumPlayers(int numPlayers) {
-        this.numPlayers = numPlayers;
+    public static void setNumPlayers(int numPlayers) {numPlayers = numPlayers;
     }
 
     public void finishGame() {

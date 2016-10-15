@@ -100,8 +100,8 @@ public class Main {
     }
 
 
-    protected static void instructions() {
-        System.out.println("How to play:" + '\n' + '\n' +
+    protected static String instructions() {
+        String instructionString = ("How to play:" + '\n' + '\n' +
                 "1. A dealer (randomly chosen) shuffles the cards and deals each player 8 cards." + '\n' +
                 "Each player can look at their cards, but should not show them to other players." + '\n' +
                 "The remaining card pack is placed face down on the table." + '\n' + '\n' +
@@ -131,5 +131,6 @@ public class Main {
                 "7. The winner of the game is the first player to lose all of their cards. The game continues until" + '\n' +
                 "all but one player (i.e., the loser) has lost their cards." + '\n' +
                 "To skip your turn enter 99" + '\n');
+        return instructionString;
     }
 }
