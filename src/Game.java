@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Game {
 
     private static final int NUM_CARDS_TO_DEAL = 8;
-    public Player[] players;
+    public static Player[] players;
     public Card currentCard;
     public static int numPlayers;
     public int dealerId;
@@ -43,38 +43,38 @@ public class Game {
     }
 
 
-    public void comTakeTurn() {
-        Player comPlayer = players[Main.currentPlayer];
-        int comChoice;
-        int counter = comPlayer.cards.size();
+    public void aiTakeTurn() {
+        Player aiPlayer = players[Main.currentPlayer];
+        int aiChoice;
+        int counter = aiPlayer.cards.size();
         if (currentCardCategory == null) {
-            currentCardCategory = comPickCategory();
+            currentCardCategory = aiPickCategory();
         }
         if (currentCard == null) {
             Random rand = new Random();
-            currentCard = comPlayer.cards.remove(rand.nextInt(comPlayer.cards.size()));
+            currentCard = aiPlayer.cards.remove(rand.nextInt(aiPlayer.cards.size()));
         }
-        if (comPlayer.cards.size() == 0) {
-            System.out.println("Com" + Player.playerID + " Wins");
+        if (aiPlayer.cards.size() == 0) {
+            System.out.println("AI" + Player.playerID + " Wins");
             finishGame();
         } else {
-            for (int i = 0; i < comPlayer.cards.size(); i++) {
-                comChoice = i;
+            for (int i = 0; i < aiPlayer.cards.size(); i++) {
+                aiChoice = i;
 
-                if (comPlayer.cards.get(comChoice).getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
-                    System.out.println("Com selecting card...");
+                if (aiPlayer.cards.get(aiChoice).getCardCategory(currentCardCategory) < currentCard.getCardCategory(currentCardCategory)) {
+                    System.out.println("AI selecting card...");
                     counter--;
                     if (counter == 0) {
-                        System.out.println("Com unable to play card");
+                        System.out.println("AI unable to play card");
                         Card pickedCard = deck.dealCards(1).remove(0);
-                        comPlayer.cards.add(pickedCard);
-                        System.out.println("Com drew a card");
+                        aiPlayer.cards.add(pickedCard);
+                        System.out.println("AI drew a card");
                         break;
                     }
                 } else {
-                    currentCard = comPlayer.cards.remove(comChoice);
+                    currentCard = aiPlayer.cards.remove(aiChoice);
 
-                    System.out.println("Com picked: " + currentCard);
+                    System.out.println("AI picked: " + currentCard);
                     break;
                 }
             }
@@ -95,14 +95,14 @@ public class Game {
         return currentCard.getCardType().equals("trump");
     }
 
-    private String comPickCategory() {
-        String[] comCategoryChoice = {"Hardness", "Cleavage", "Specific Gravity", "Crustal Abundance", "Economic Value"};
-        String comChoiceCategory;
-        System.out.println("Com selecting category");
-        comChoiceCategory = (comCategoryChoice[new Random().nextInt(comCategoryChoice.length)]);
-        System.out.println(comChoiceCategory);
+    private String aiPickCategory() {
+        String[] aiCategoryChoice = {"Hardness", "Cleavage", "Specific Gravity", "Crustal Abundance", "Economic Value"};
+        String aiChoiceCategory;
+        System.out.println("AI selecting category");
+        aiChoiceCategory = (aiCategoryChoice[new Random().nextInt(aiCategoryChoice.length)]);
+        System.out.println(aiChoiceCategory);
 
-        return comChoiceCategory;
+        return aiChoiceCategory;
     }
 
     public String getCategory() {
@@ -211,8 +211,8 @@ public class Game {
         return false;
     }
 
-
-    public static void setNumPlayers(int numPlayers) {numPlayers = numPlayers;
+    public static void setNumPlayers(int numberPlayers) {
+        numPlayers = numberPlayers;
     }
 
     public void finishGame() {

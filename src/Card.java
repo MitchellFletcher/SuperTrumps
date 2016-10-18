@@ -3,7 +3,7 @@ import java.util.ArrayList;
 //TODO: Fix Occurrence not displaying when printed
 
 public class Card {
-    private String fileName, cardType, title, chemistry, classification, crystalSystem, cleavage, crustalAbundance, economicValue, occurString;
+    public String fileName, cardType, title, chemistry, classification, crystalSystem, cleavage, crustalAbundance, economicValue, occurString;
     private ArrayList<String> occurrence = new ArrayList<>();
     private double hardness, specificGravity;
 

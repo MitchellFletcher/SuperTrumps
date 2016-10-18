@@ -2,19 +2,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainView {
     private JFrame mainFrame;
     private JPanel mainPanel;
     private JButton instructionsButton;
     private JButton playGameButton;
-    private JComboBox setNumComs;
+    private JComboBox setNumAI;
+    Game game;
 
     public MainView() {
         mainFrame = new JFrame("Super Trumps");
 
         mainFrame.setVisible(true);
-        mainFrame.setSize(1280, 720);
+        mainFrame.setSize(600, 480);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLocationRelativeTo(null);
 
@@ -26,9 +28,15 @@ public class MainView {
         playGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame playGameFrame = new JFrame("Super Trumps");
-                playGameFrame.setVisible(true);
-                playGameFrame.setSize(1280, 720);
+                game = new Game();
+                game.selectDealer();
+                game.dealRandomCards();
+                game.setUser();
+                try {
+                    new GameView(game.players);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
@@ -53,25 +61,25 @@ public class MainView {
             }
         });
 
-        setNumComs = new JComboBox();
-        setNumComs.addActionListener(new ActionListener() {
+        setNumAI = new JComboBox();
+        setNumAI.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String numComsString = setNumComs.getSelectedItem().toString();
-                int numComs = Integer.parseInt(numComsString);
-                Game.setNumPlayers(numComs);
+                String numAIsString = setNumAI.getSelectedItem().toString();
+                int numAIs = Integer.parseInt(numAIsString);
+                Game.setNumPlayers(numAIs);
             }
         });
-        setNumComs.addItem(2);
-        setNumComs.addItem(3);
-        setNumComs.addItem(4);
+        setNumAI.addItem(2);
+        setNumAI.addItem(3);
+        setNumAI.addItem(4);
 
-        JLabel setNumberComsLabel = new JLabel("Set the number of opponents:");
+        JLabel setNumberAIsLabel = new JLabel("Set the number of opponents:");
 
         mainPanel.add(playGameButton);
         mainPanel.add(instructionsButton);
-        mainPanel.add(setNumberComsLabel);
-        mainPanel.add(setNumComs);
+        mainPanel.add(setNumberAIsLabel);
+        mainPanel.add(setNumAI);
         mainFrame.add(mainPanel);
         mainFrame.revalidate();
     }
@@ -80,4 +88,5 @@ public class MainView {
         new MainView();
     }
 }
+
 

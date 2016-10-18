@@ -43,7 +43,7 @@ public class Main {
                 game.playerTakeTurn();
 
             } else {
-                game.comTakeTurn();
+                game.aiTakeTurn();
             }
             currentPlayer += 1;
         }
