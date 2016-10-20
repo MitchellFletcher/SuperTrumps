@@ -19,7 +19,9 @@ public class GameView extends JFrame {
 
         playerView = new PlayerView(players[0]);
         JScrollPane playerViewScroll = new JScrollPane(playerView,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        playerViewScroll.getHorizontalScrollBar().setUnitIncrement(32);
+
         add(playerViewScroll, BorderLayout.SOUTH);
         add(playerViewScroll, BorderLayout.CENTER);
         add(tableView, BorderLayout.NORTH);

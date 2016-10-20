@@ -15,10 +15,10 @@ public class TableView extends JPanel {
         setBackground(Color.GRAY);
         currentCardView = new JLabel("");
         JLabel currentCardCategoryView = new JLabel("Current category: " + SelectCategoryView.getCurrentCategory());
-        JButton drawCardButton = new JButton("Draw Card!");
+
 
         add(currentCardView);
         add(currentCardCategoryView);
-        add(drawCardButton);
+
     }
 }

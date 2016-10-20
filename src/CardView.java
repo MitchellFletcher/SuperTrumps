@@ -26,6 +26,7 @@ public class CardView extends JPanel {
             currentCardView.setIcon(new ImageIcon(cardImage));
             remove(viewCard);
             revalidate();
+            MainView.aiPlayCard();
         });
         add(viewCard);
     }

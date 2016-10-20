@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Random;
 
 public class MainView {
     private JFrame mainFrame;
@@ -10,7 +11,7 @@ public class MainView {
     private JButton instructionsButton;
     private JButton playGameButton;
     private JComboBox setNumAI;
-    Game game;
+    public static Game game = new Game();
 
     public MainView() {
         mainFrame = new JFrame("Super Trumps");
@@ -84,6 +85,20 @@ public class MainView {
         mainFrame.revalidate();
     }
 
+    public static void aiPlayCard() {
+        Random rand = new Random();
+        Card aiCard = game.players[1].cards.remove(rand.nextInt(game.players[1].cards.size() - 1));
+        System.out.println("AI played:\n" + aiCard);
+        try {
+            CardView card3 = new CardView(aiCard);
+
+
+            TableView.currentCardView.setIcon(new ImageIcon(card3.cardImage));
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         new MainView();
     }
