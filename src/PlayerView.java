@@ -36,6 +36,7 @@ public class PlayerView extends JPanel {
     public void drawCard() {
         Card drawnCard = deck.dealCards(1).remove(0);
         System.out.println(drawnCard);
+        revalidate();
         try {
             add(new CardView(drawnCard));
         } catch (IOException e) {

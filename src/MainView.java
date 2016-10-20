@@ -29,7 +29,6 @@ public class MainView {
         playGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                game = new Game();
                 game.selectDealer();
                 game.dealRandomCards();
                 game.setUser();
@@ -86,17 +85,22 @@ public class MainView {
     }
 
     public static void aiPlayCard() {
+
         Random rand = new Random();
-        Card aiCard = game.players[1].cards.remove(rand.nextInt(game.players[1].cards.size() - 1));
+        Card aiCard = game.players[1].cards.remove(rand.nextInt(game.players[1].cards.size()));
         System.out.println("AI played:\n" + aiCard);
+
         try {
             CardView card3 = new CardView(aiCard);
-
 
             TableView.currentCardView.setIcon(new ImageIcon(card3.cardImage));
 
         } catch (IOException e1) {
             e1.printStackTrace();
+        }
+        if(MainView.game.players[1].cards.size() == 0){
+            JOptionPane.showMessageDialog(null,"COMPUTER WINS!");
+            System.exit(1);
         }
     }
     public static void main(String[] args) {
