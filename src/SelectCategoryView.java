@@ -8,7 +8,7 @@ public class SelectCategoryView {
         Object[] categories = {"Hardness", "Specific Gravity", "Cleavage", "Crustal Abundance", "Economic Value"};
         int n = -1;
         while (n == -1) {
-            n = JOptionPane.showOptionDialog(new JOptionPane(), "Please choose a category to play.", "Category Selection",
+            n = JOptionPane.showOptionDialog(new JOptionPane(), "Please select a category:", "Category Selection",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, categories, categories[0]);
         }
         switch (n) {

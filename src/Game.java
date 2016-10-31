@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Game {
 
     private static final int NUM_CARDS_TO_DEAL = 8;
-    public  Player[] players;
+    public Player[] players;
     public Card currentCard;
     public static int numPlayers;
     public int dealerId;
@@ -151,7 +151,6 @@ public class Game {
                 }
             }
         }
-
 
         currentCard = players[0].cards.remove(choice);
 

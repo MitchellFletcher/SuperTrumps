@@ -16,7 +16,6 @@ public class CardView extends JPanel {
     public CardView(Card card) throws IOException {
 
 
-
         try {
             cardImage = ImageIO.read(new File(workingDirectory + "/res/" + card.fileName));
         } catch (IOException e) {
@@ -28,8 +27,8 @@ public class CardView extends JPanel {
         add(viewCard);
         revalidate();
         viewCard.addActionListener(e -> {
-            if(MainView.game.players[0].cards.size()== 1){
-                JOptionPane.showMessageDialog(null,"CONGRATULATIONS YOU WON!" );
+            if (MainView.game.players[0].cards.size() == 1) {
+                JOptionPane.showMessageDialog(null, "CONGRATULATIONS YOU WON!");
                 System.exit(1);
             }
 
@@ -39,11 +38,7 @@ public class CardView extends JPanel {
             revalidate();
             MainView.aiPlayCard();
             revalidate();
-
         });
-
-
-
     }
 
     private BufferedImage cardResize(BufferedImage cardImage, int i, int i1, int typeIntArgb) {

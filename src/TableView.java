@@ -5,11 +5,11 @@ public class TableView extends JPanel {
     static JLabel currentCardView;
     String currentCardCategoryView;
 
-    public TableView(){
+    public TableView() {
 
         super();
 
-        setLayout(new FlowLayout (FlowLayout.CENTER, 200, 0));
+        setLayout(new FlowLayout(FlowLayout.CENTER, 200, 0));
         setVisible(true);
 
         setBackground(Color.GRAY);

@@ -86,23 +86,28 @@ public class MainView {
 
     public static void aiPlayCard() {
 
+        JOptionPane.showMessageDialog(null, "AI picking card");
+
         Random rand = new Random();
         Card aiCard = game.players[1].cards.remove(rand.nextInt(game.players[1].cards.size()));
         System.out.println("AI played:\n" + aiCard);
+        JOptionPane.showMessageDialog(null, "AI played a card!");
+//        JOptionPane.showMessageDialog(null, "AI played " + aiCard + "!");
 
         try {
-            CardView card3 = new CardView(aiCard);
+            CardView aiCardView = new CardView(aiCard);
 
-            TableView.currentCardView.setIcon(new ImageIcon(card3.cardImage));
+            TableView.currentCardView.setIcon(new ImageIcon(aiCardView.cardImage));
 
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        if(MainView.game.players[1].cards.size() == 0){
-            JOptionPane.showMessageDialog(null,"COMPUTER WINS!");
+        if (MainView.game.players[1].cards.size() == 0) {
+            JOptionPane.showMessageDialog(null, "COMPUTER WINS!");
             System.exit(1);
         }
     }
+
     public static void main(String[] args) {
         new MainView();
     }
